@@ -4,9 +4,36 @@ import { UserData, EmploymentType, FeasibilityResult, BankProduct } from './type
 import { evaluateFeasibility, calculateMonthlyPayment } from './utils/math';
 import { BENCHMARKS_2026, BANK_PROFILES } from './constants';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { MessageCircle, Phone, User, ArrowLeft } from 'lucide-react';
+import { MessageCircle, Phone, User, ArrowLeft, X } from 'lucide-react';
 
 // --- Components ---
+
+const Modal: React.FC<{ title: string; isOpen: boolean; onClose: () => void; children: React.ReactNode }> = ({ title, isOpen, onClose, children }) => {
+  if (!isOpen) return null;
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white rounded-3xl w-full max-w-2xl max-h-[80vh] overflow-hidden shadow-2xl flex flex-col animate-in zoom-in-95 duration-200">
+        <div className="px-8 py-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+          <h3 className="text-sm font-black text-slate-800 uppercase tracking-widest">{title}</h3>
+          <button onClick={onClose} className="p-2 hover:bg-slate-200 rounded-xl transition-colors">
+            <X className="w-5 h-5 text-slate-500" />
+          </button>
+        </div>
+        <div className="p-8 overflow-y-auto text-sm text-slate-600 leading-relaxed space-y-4">
+          {children}
+        </div>
+        <div className="px-8 py-6 border-t border-slate-100 bg-slate-50 flex justify-end">
+          <button 
+            onClick={onClose}
+            className="bg-indigo-600 text-white text-[10px] font-black px-6 py-3 rounded-xl uppercase tracking-widest hover:bg-indigo-700 transition-all"
+          >
+            Chiudi
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Header: React.FC<{ setView: (v: 'simulator' | 'contacts') => void; currentView: string }> = ({ setView, currentView }) => (
   <header className="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
@@ -95,6 +122,7 @@ const StatusBadge: React.FC<{ status: FeasibilityResult['status'] }> = ({ status
 
 const App: React.FC = () => {
   const [view, setView] = useState<'simulator' | 'contacts'>('simulator');
+  const [activeModal, setActiveModal] = useState<'privacy' | 'terms' | 'transparency' | null>(null);
   const [userData, setUserData] = useState<UserData>({
     price: 250000,
     loanAmount: 200000,
@@ -427,14 +455,45 @@ Riepilogo simulazione Bancometro.it:
             L'approvazione finale è soggetta a perizia tecnica e valutazione del merito creditizio.
           </p>
           <div className="flex justify-center gap-6 text-slate-300 text-[9px] font-black uppercase tracking-widest">
-            <span className="hover:text-indigo-600 transition-colors cursor-pointer">Privacy Policy</span>
+            <button onClick={() => setActiveModal('privacy')} className="hover:text-indigo-600 transition-colors cursor-pointer">Privacy Policy</button>
             <span>/</span>
-            <span className="hover:text-indigo-600 transition-colors cursor-pointer">Termini & Servizi</span>
+            <button onClick={() => setActiveModal('terms')} className="hover:text-indigo-600 transition-colors cursor-pointer">Termini & Servizi</button>
             <span>/</span>
-            <span className="hover:text-indigo-600 transition-colors cursor-pointer">Trasparenza</span>
+            <button onClick={() => setActiveModal('transparency')} className="hover:text-indigo-600 transition-colors cursor-pointer">Trasparenza</button>
           </div>
         </div>
       </footer>
+
+      <Modal 
+        title="Privacy Policy" 
+        isOpen={activeModal === 'privacy'} 
+        onClose={() => setActiveModal(null)}
+      >
+        <p className="font-bold text-slate-800">Informativa sul trattamento dei dati</p>
+        <p>Bancometro.it rispetta la tua privacy. I dati inseriti nel simulatore (reddito, età, importo mutuo) vengono utilizzati esclusivamente per generare il calcolo in tempo reale e non vengono memorizzati in database permanenti a meno che non venga esplicitamente richiesta una consulenza.</p>
+        <p>In caso di contatto tramite WhatsApp, i dati verranno trattati dai nostri consulenti nel rispetto del GDPR per la sola finalità di assistenza creditizia.</p>
+      </Modal>
+
+      <Modal 
+        title="Termini & Servizi" 
+        isOpen={activeModal === 'terms'} 
+        onClose={() => setActiveModal(null)}
+      >
+        <p className="font-bold text-slate-800">Condizioni d'uso del servizio</p>
+        <p>Bancometro.it è uno strumento gratuito e puramente informativo. I risultati della simulazione sono basati su algoritmi statistici e dati di mercato aggiornati al 2026.</p>
+        <p><strong>Importante:</strong> Il simulatore non costituisce una consulenza finanziaria personalizzata, né una proposta contrattuale o un'offerta di credito. L'esito della simulazione non garantisce l'effettiva erogazione del mutuo, che resta subordinata alla valutazione discrezionale dell'istituto bancario erogante.</p>
+        <p>L'utente riconosce che l'utilizzo dello strumento avviene sotto la propria responsabilità e che Bancometro.it non risponde di eventuali discrepanze tra la simulazione e l'offerta reale della banca.</p>
+      </Modal>
+
+      <Modal 
+        title="Trasparenza" 
+        isOpen={activeModal === 'transparency'} 
+        onClose={() => setActiveModal(null)}
+      >
+        <p className="font-bold text-slate-800">Trasparenza e Metodologia</p>
+        <p>I tassi di interesse utilizzati (TAN 3.20% Fixed) rappresentano i benchmark medi previsti per l'anno 2026. I calcoli includono una stima del TAEG basata su costi medi di istruttoria e perizia.</p>
+        <p>Il calcolo della sostenibilità (DTI) segue le linee guida bancarie standard, considerando un impegno massimo del 33% del reddito netto mensile. La valutazione LTV (Loan to Value) tiene conto delle agevolazioni previste per i giovani Under 36 (Fondo di Garanzia CONSAP).</p>
+      </Modal>
     </div>
   );
 };
