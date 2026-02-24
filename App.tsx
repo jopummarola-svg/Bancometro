@@ -23,7 +23,7 @@ const Modal: React.FC<{ title: string; isOpen: boolean; onClose: () => void; chi
           {children}
         </div>
         <div className="px-8 py-6 border-t border-slate-100 bg-slate-50 flex justify-end">
-          <button 
+          <button
             onClick={onClose}
             className="bg-indigo-600 text-white text-[10px] font-black px-6 py-3 rounded-xl uppercase tracking-widest hover:bg-indigo-700 transition-all"
           >
@@ -53,13 +53,13 @@ const Header: React.FC<{ setView: (v: 'simulator' | 'contacts') => void; current
       </div>
       <div className="hidden md:flex gap-8 items-center">
         <nav className="flex gap-6">
-          <button 
+          <button
             onClick={() => setView('simulator')}
             className={`text-xs font-black uppercase tracking-widest transition-colors ${currentView === 'simulator' ? 'text-indigo-600' : 'text-slate-400 hover:text-slate-600'}`}
           >
             Simulatore
           </button>
-          <button 
+          <button
             onClick={() => setView('contacts')}
             className={`text-xs font-black uppercase tracking-widest transition-colors ${currentView === 'contacts' ? 'text-indigo-600' : 'text-slate-400 hover:text-slate-600'}`}
           >
@@ -71,7 +71,7 @@ const Header: React.FC<{ setView: (v: 'simulator' | 'contacts') => void; current
           <span className="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">Target Rate 2026</span>
           <span className="text-sm font-bold text-indigo-600">3.20% Fixed</span>
         </div>
-        <button 
+        <button
           onClick={() => setView('contacts')}
           className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-6 py-3 rounded-xl transition-all shadow-md shadow-indigo-100 uppercase tracking-wider"
         >
@@ -106,12 +106,12 @@ const StatusBadge: React.FC<{ status: FeasibilityResult['status'] }> = ({ status
     YELLOW: 'bg-amber-400 text-white border-amber-500',
     RED: 'bg-rose-500 text-white border-rose-600',
   };
-  const labels = { 
-    GREEN: 'PROFILO ECCELLENTE', 
-    YELLOW: 'PROFILO DA RIVEDERE', 
-    RED: 'PROFILO CRITICO' 
+  const labels = {
+    GREEN: 'PROFILO ECCELLENTE',
+    YELLOW: 'PROFILO DA RIVEDERE',
+    RED: 'PROFILO CRITICO'
   };
-  
+
   return (
     <div className={`px-6 py-2.5 rounded-full shadow-lg text-xs font-black tracking-widest inline-flex items-center gap-3 border-b-4 ${styles[status]}`}>
       <span className={`w-2 h-2 rounded-full bg-white ${status === 'GREEN' || status === 'RED' || status === 'YELLOW' ? 'animate-pulse' : ''}`}></span>
@@ -168,14 +168,14 @@ Riepilogo simulazione Bancometro.it:
 - Rata Mensile: €${Math.round(feasibility.monthlyPayment).toLocaleString('it-IT')}
 - DTI: ${(feasibility.dti * 100).toFixed(0)}%
 - LTV: ${(feasibility.ltv * 100).toFixed(0)}%`;
-    
+
     return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
   };
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900">
       <Header setView={setView} currentView={view} />
-      
+
       <main className="flex-1 max-w-7xl mx-auto w-full p-4 md:p-8">
         {view === 'simulator' ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -185,71 +185,71 @@ Riepilogo simulazione Bancometro.it:
                 <h2 className="text-sm font-black text-slate-800 mb-8 flex items-center gap-3 uppercase tracking-[0.15em] border-l-4 border-indigo-600 pl-4">
                   Configuratore Mutuo
                 </h2>
-                
-                <InputField 
-                  label="Costo Immobile" 
-                  value={userData.price} 
-                  onChange={(v) => setUserData(prev => ({ ...prev, price: v, loanAmount: Math.round(v * 0.8) }))} 
-                  suffix=" €" 
-                  min={50000} 
-                  max={1000000} 
-                  step={5000} 
-                />
-                
-                <InputField 
-                  label="Finanziamento" 
-                  value={userData.loanAmount} 
-                  onChange={(v) => setUserData(prev => ({ ...prev, loanAmount: v }))} 
-                  suffix=" €" 
-                  min={30000} 
-                  max={userData.price} 
-                  step={5000} 
+
+                <InputField
+                  label="Costo Immobile"
+                  value={userData.price}
+                  onChange={(v) => setUserData(prev => ({ ...prev, price: v, loanAmount: Math.round(v * 0.8) }))}
+                  suffix=" €"
+                  min={50000}
+                  max={1000000}
+                  step={5000}
                 />
 
-                <InputField 
-                  label="Anni di ammortamento" 
-                  value={userData.durationYears} 
-                  onChange={(v) => setUserData(prev => ({ ...prev, durationYears: v }))} 
+                <InputField
+                  label="Finanziamento"
+                  value={userData.loanAmount}
+                  onChange={(v) => setUserData(prev => ({ ...prev, loanAmount: v }))}
+                  suffix=" €"
+                  min={30000}
+                  max={userData.price}
+                  step={5000}
+                />
+
+                <InputField
+                  label="Anni di ammortamento"
+                  value={userData.durationYears}
+                  onChange={(v) => setUserData(prev => ({ ...prev, durationYears: v }))}
                   suffix=" anni"
-                  min={5} 
-                  max={30} 
+                  min={5}
+                  max={30}
                 />
 
-                <InputField 
-                  label="Tasso di Interesse (TAN)" 
-                  value={userData.interestRate} 
-                  onChange={(v) => setUserData(prev => ({ ...prev, interestRate: v }))} 
+                <InputField
+                  label="Tasso di Interesse (TAN)"
+                  value={userData.interestRate}
+                  onChange={(v) => setUserData(prev => ({ ...prev, interestRate: v }))}
                   suffix=" %"
-                  min={0.1} 
-                  max={10} 
-                  step={0.05} 
+                  min={0.1}
+                  max={10}
+                  step={0.05}
                 />
 
-                <InputField 
-                  label="Entrate Mensili Nette" 
-                  value={userData.monthlyNetIncome} 
-                  onChange={(v) => setUserData(prev => ({ ...prev, monthlyNetIncome: v }))} 
-                  suffix=" €" 
-                  min={800} 
-                  max={15000} 
-                  step={50} 
+                <InputField
+                  label="Entrate Mensili Nette"
+                  value={userData.monthlyNetIncome}
+                  onChange={(v) => setUserData(prev => ({ ...prev, monthlyNetIncome: v }))}
+                  suffix=" €"
+                  min={800}
+                  max={15000}
+                  step={50}
                 />
 
-                <InputField 
-                  label="Uscite per altri Prestiti" 
-                  value={userData.otherLoans} 
-                  onChange={(v) => setUserData(prev => ({ ...prev, otherLoans: v }))} 
-                  suffix=" €" 
-                  min={0} 
-                  max={3000} 
-                  step={10} 
+                <InputField
+                  label="Uscite per altri Prestiti"
+                  value={userData.otherLoans}
+                  onChange={(v) => setUserData(prev => ({ ...prev, otherLoans: v }))}
+                  suffix=" €"
+                  min={0}
+                  max={3000}
+                  step={10}
                 />
 
                 <div className="grid grid-cols-2 gap-6 mb-6">
                    <div>
                       <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Età Richiedente</label>
-                      <input 
-                        type="number" 
+                      <input
+                        type="number"
                         value={userData.age}
                         onChange={(e) => setUserData(prev => ({ ...prev, age: Number(e.target.value) }))}
                         className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
@@ -257,8 +257,8 @@ Riepilogo simulazione Bancometro.it:
                    </div>
                    <div>
                       <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Persone a carico</label>
-                      <input 
-                        type="number" 
+                      <input
+                        type="number"
                         value={userData.dependents}
                         onChange={(e) => setUserData(prev => ({ ...prev, dependents: Number(e.target.value) }))}
                         className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
@@ -268,7 +268,7 @@ Riepilogo simulazione Bancometro.it:
 
                 <div className="mb-8">
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Situazione Lavorativa</label>
-                  <select 
+                  <select
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-indigo-500 outline-none appearance-none cursor-pointer"
                     value={userData.employmentType}
                     onChange={(e) => setUserData(prev => ({ ...prev, employmentType: e.target.value as EmploymentType }))}
@@ -280,8 +280,8 @@ Riepilogo simulazione Bancometro.it:
                 </div>
 
                 <label className="flex items-center gap-4 cursor-pointer group bg-indigo-600 p-5 rounded-2xl shadow-xl shadow-indigo-200">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     checked={userData.isUnder36}
                     onChange={(e) => setUserData(prev => ({ ...prev, isUnder36: e.target.checked }))}
                     className="w-6 h-6 rounded-lg border-indigo-400 text-white focus:ring-indigo-500 bg-indigo-700"
@@ -296,7 +296,7 @@ Riepilogo simulazione Bancometro.it:
 
             {/* RIGHT: RESULTS */}
             <section className="lg:col-span-8 space-y-8">
-              
+
               <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
                 <div className="p-8 border-b border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                   <div>
@@ -329,8 +329,8 @@ Riepilogo simulazione Bancometro.it:
                         <span>Analisi di<br/>Sostenibilità</span>
                       </h3>
                       <div className={`flex gap-4 p-5 rounded-2xl border ${
-                        feasibility.status === 'RED' ? 'bg-rose-50 border-rose-100 text-rose-800' : 
-                        feasibility.status === 'YELLOW' ? 'bg-amber-50 border-amber-100 text-amber-800' : 
+                        feasibility.status === 'RED' ? 'bg-rose-50 border-rose-100 text-rose-800' :
+                        feasibility.status === 'YELLOW' ? 'bg-amber-50 border-amber-100 text-amber-800' :
                         'bg-indigo-50 border-indigo-100 text-indigo-800'
                       }`}>
                         <div className="mt-1">
@@ -345,7 +345,7 @@ Riepilogo simulazione Bancometro.it:
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="bg-white rounded-3xl p-6 h-80 relative shadow-inner border border-slate-50">
                        <h3 className="text-[10px] font-black text-slate-400 mb-4 uppercase tracking-[0.2em] text-center">Breakdown Budget Mensile</h3>
                        <ResponsiveContainer width="100%" height="90%">
@@ -364,13 +364,13 @@ Riepilogo simulazione Bancometro.it:
                                 <Cell key={`cell-${index}`} fill={entry.fill} className="hover:opacity-80 transition-opacity" />
                               ))}
                             </Pie>
-                            <Tooltip 
+                            <Tooltip
                               contentStyle={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '16px', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
                               itemStyle={{ fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', color: '#1e293b' }}
                             />
-                            <Legend 
-                              verticalAlign="bottom" 
-                              height={36} 
+                            <Legend
+                              verticalAlign="bottom"
+                              height={36}
                               formatter={(value) => <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{value}</span>}
                             />
                           </PieChart>
@@ -386,7 +386,7 @@ Riepilogo simulazione Bancometro.it:
                   <h3 className="text-3xl font-black text-white tracking-tighter">Puntiamo alla delibera?</h3>
                   <p className="text-indigo-100 text-sm font-medium">I consulenti Bancometro.it analizzano gratuitamente la tua richiesta di mutuo</p>
                 </div>
-                <button 
+                <button
                   onClick={() => setView('contacts')}
                   className="bg-white text-indigo-700 font-black px-10 py-5 rounded-2xl shadow-xl hover:bg-indigo-50 hover:scale-105 active:scale-100 transition-all uppercase tracking-widest text-xs"
                 >
@@ -398,14 +398,14 @@ Riepilogo simulazione Bancometro.it:
           </div>
         ) : (
           <div className="max-w-4xl mx-auto py-12">
-            <button 
+            <button
               onClick={() => setView('simulator')}
               className="flex items-center gap-2 text-slate-400 hover:text-indigo-600 font-black uppercase tracking-widest text-xs mb-12 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               Torna al Simulatore
             </button>
-            
+
             <div className="text-center mb-16">
               <h2 className="text-4xl font-black text-slate-900 tracking-tighter mb-4">I Nostri Esperti</h2>
               <p className="text-slate-500 font-medium">Scegli un consulente per ricevere assistenza personalizzata su WhatsApp.</p>
@@ -413,39 +413,39 @@ Riepilogo simulazione Bancometro.it:
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
-                { 
-                  name: 'Mario SORICE', 
-                  phone: '3933364925', 
-                  role: 'Senior Credit Analyst',
+                {
+                  name: 'Mario SORICE',
+                  phone: '3933364925',
+                  role: 'Resp.le Analisi Crediti',
                   icon: 'https://img.icons8.com/color/200/businessman.png'
                 },
-                { 
-                  name: 'Daniela RUGGIERO', 
-                  phone: '3496753212', 
-                  role: 'Mortgage Specialist',
+                {
+                  name: 'Daniela RUGGIERO',
+                  phone: '3496753212',
+                  role: 'Specialista Mutui e Prestiti',
                   icon: 'https://img.icons8.com/color/200/businesswoman.png'
                 }
               ].map((contact, i) => (
                 <div key={i} className="bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/60 border border-slate-100 flex flex-col items-center text-center group hover:border-indigo-500 transition-all">
                   <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mb-6 border-4 border-white shadow-inner group-hover:bg-indigo-50 transition-colors overflow-hidden">
-                    <img 
-                      src={contact.icon} 
-                      alt={contact.name} 
+                    <img
+                      src={contact.icon}
+                      alt={contact.name}
                       className="w-16 h-16 object-contain"
                     />
                   </div>
                   <h3 className="text-xl font-black text-slate-900 mb-1">{contact.name}</h3>
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">{contact.role}</p>
-                  
+
                   <div className="flex flex-col gap-3 w-full">
-                    <a 
+                    <a
                       href={`tel:${contact.phone}`}
                       className="flex items-center justify-center gap-3 bg-slate-50 hover:bg-slate-100 text-slate-600 font-bold py-4 rounded-2xl transition-all border border-slate-100"
                     >
                       <Phone className="w-4 h-4" />
                       {contact.phone}
                     </a>
-                    <a 
+                    <a
                       href={generateWhatsAppLink(contact.phone)}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -454,7 +454,7 @@ Riepilogo simulazione Bancometro.it:
                       <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                       </svg>
-                      Contatta su WhatsApp
+                      Esito Mutuo su WhatsApp
                     </a>
                   </div>
                 </div>
@@ -463,9 +463,9 @@ Riepilogo simulazione Bancometro.it:
 
             <div className="mt-16 p-8 bg-indigo-50 rounded-3xl border border-indigo-100 text-center flex flex-col items-center gap-6">
               <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-inner border-4 border-white overflow-hidden">
-                <img 
-                  src="https://img.icons8.com/color/200/businessman.png" 
-                  alt="Consulente Bancometro" 
+                <img
+                  src="https://img.icons8.com/color/200/businessman.png"
+                  alt="Consulente Bancometro"
                   className="w-24 h-24 object-contain"
                 />
               </div>
@@ -479,7 +479,7 @@ Riepilogo simulazione Bancometro.it:
           </div>
         )}
       </main>
-      
+
       <footer className="bg-white py-16 px-6 mt-12 text-center border-t border-slate-100">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="flex flex-col items-center gap-2">
@@ -487,8 +487,8 @@ Riepilogo simulazione Bancometro.it:
             <div className="h-1 w-12 bg-indigo-600 rounded-full"></div>
           </div>
           <p className="text-[10px] text-slate-400 max-w-2xl mx-auto leading-relaxed uppercase tracking-widest font-bold">
-            Simulazione effettuata su basi statistiche 2026. Bancometro.it non è un intermediario finanziario. 
-            Le informazioni fornite non costituiscono consulenza finanziaria personalizzata. 
+            Simulazione effettuata su basi statistiche 2026. Bancometro.it non è un intermediario finanziario.
+            Le informazioni fornite non costituiscono consulenza finanziaria personalizzata.
             L'approvazione finale è soggetta a perizia tecnica e valutazione del merito creditizio.
           </p>
           <div className="flex justify-center gap-6 text-slate-300 text-[9px] font-black uppercase tracking-widest">
@@ -501,9 +501,9 @@ Riepilogo simulazione Bancometro.it:
         </div>
       </footer>
 
-      <Modal 
-        title="Privacy Policy" 
-        isOpen={activeModal === 'privacy'} 
+      <Modal
+        title="Privacy Policy"
+        isOpen={activeModal === 'privacy'}
         onClose={() => setActiveModal(null)}
       >
         <p className="font-bold text-slate-800">Informativa sul trattamento dei dati</p>
@@ -511,9 +511,9 @@ Riepilogo simulazione Bancometro.it:
         <p>In caso di contatto tramite WhatsApp, i dati verranno trattati dai nostri consulenti nel rispetto del GDPR per la sola finalità di assistenza creditizia.</p>
       </Modal>
 
-      <Modal 
-        title="Termini & Servizi" 
-        isOpen={activeModal === 'terms'} 
+      <Modal
+        title="Termini & Servizi"
+        isOpen={activeModal === 'terms'}
         onClose={() => setActiveModal(null)}
       >
         <p className="font-bold text-slate-800">Condizioni d'uso del servizio</p>
@@ -522,9 +522,9 @@ Riepilogo simulazione Bancometro.it:
         <p>L'utente riconosce che l'utilizzo dello strumento avviene sotto la propria responsabilità e che Bancometro.it non risponde di eventuali discrepanze tra la simulazione e l'offerta reale della banca.</p>
       </Modal>
 
-      <Modal 
-        title="Trasparenza" 
-        isOpen={activeModal === 'transparency'} 
+      <Modal
+        title="Trasparenza"
+        isOpen={activeModal === 'transparency'}
         onClose={() => setActiveModal(null)}
       >
         <p className="font-bold text-slate-800">Trasparenza e Metodologia</p>
