@@ -5,6 +5,7 @@ import { evaluateFeasibility, calculateMonthlyPayment } from './utils/math';
 import { BENCHMARKS_2026, BANK_PROFILES } from './constants';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { MessageCircle, Phone, User, ArrowLeft, X } from 'lucide-react';
+import { RequestForm } from './RequestForm';
 
 // --- Components ---
 
@@ -35,7 +36,7 @@ const Modal: React.FC<{ title: string; isOpen: boolean; onClose: () => void; chi
   );
 };
 
-const Header: React.FC<{ setView: (v: 'simulator' | 'contacts') => void; currentView: string }> = ({ setView, currentView }) => (
+const Header: React.FC<{ setView: (v: 'simulator' | 'contacts' | 'request') => void; currentView: string }> = ({ setView, currentView }) => (
   <header className="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
     <div className="max-w-7xl mx-auto flex justify-between items-center">
       <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView('simulator')}>
@@ -72,8 +73,8 @@ const Header: React.FC<{ setView: (v: 'simulator' | 'contacts') => void; current
           <span className="text-sm font-bold text-indigo-600">3.20% Fixed</span>
         </div>
         <button 
-          onClick={() => setView('contacts')}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-6 py-3 rounded-xl transition-all shadow-md shadow-indigo-100 uppercase tracking-wider"
+          onClick={() => setView('request')}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-6 py-3 rounded-xl transition-all shadow-md shadow-indigo-100 uppercase tracking-wider cursor-pointer"
         >
           Richiedi Consulenza
         </button>
@@ -125,7 +126,7 @@ const StatusBadge: React.FC<{ status: FeasibilityResult['status'] }> = ({ status
 };
 
 const App: React.FC = () => {
-  const [view, setView] = useState<'simulator' | 'contacts'>('simulator');
+  const [view, setView] = useState<'simulator' | 'contacts' | 'request'>('simulator');
   const [activeModal, setActiveModal] = useState<'privacy' | 'terms' | 'transparency' | null>(null);
   const [userData, setUserData] = useState<UserData>({
     price: 150000,
@@ -181,7 +182,7 @@ Riepilogo simulazione Bancometro.it:
       <Header setView={setView} currentView={view} />
       
       <main className="flex-1 max-w-7xl mx-auto w-full p-4 md:p-8">
-        {view === 'simulator' ? (
+        {view === 'simulator' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* LEFT: INPUTS */}
             <section className="lg:col-span-4 space-y-6">
@@ -391,16 +392,36 @@ Riepilogo simulazione Bancometro.it:
                   <p className="text-indigo-100 text-sm font-medium">I consulenti Bancometro.it analizzano gratuitamente la tua richiesta di mutuo</p>
                 </div>
                 <button 
-                  onClick={() => setView('contacts')}
-                  className="bg-white text-indigo-700 font-black px-10 py-5 rounded-2xl shadow-xl hover:bg-indigo-50 hover:scale-105 active:scale-100 transition-all uppercase tracking-widest text-xs"
+                  onClick={() => setView('request')}
+                  className="bg-white text-indigo-700 font-black px-10 py-5 rounded-2xl shadow-xl hover:bg-indigo-50 hover:scale-105 active:scale-100 transition-all uppercase tracking-widest text-xs cursor-pointer"
                 >
                   SBLOCCA IL TUO MUTUO
                 </button>
               </div>
 
+              <p className="text-center text-xs font-semibold text-slate-400 py-2">
+                App di proprietà di Mario SORICE (C) 2026 - tutti i diritti riservati
+              </p>
+
             </section>
           </div>
-        ) : (
+        )}
+
+        {view === 'request' && (
+          <RequestForm
+            initialData={{
+              loanAmount: userData.loanAmount,
+              monthlyNetIncome: userData.monthlyNetIncome,
+              age: userData.age,
+              employmentType: userData.employmentType,
+              feasibility: feasibility,
+            }}
+            onBack={() => setView('simulator')}
+            onGoToContacts={() => setView('contacts')}
+          />
+        )}
+
+        {view === 'contacts' && (
           <div className="max-w-4xl mx-auto py-12">
             <button 
               onClick={() => setView('simulator')}
