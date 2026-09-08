@@ -410,10 +410,16 @@ Riepilogo simulazione Bancometro.it:
         {view === 'request' && (
           <RequestForm
             initialData={{
+              price: userData.price,
               loanAmount: userData.loanAmount,
+              durationYears: userData.durationYears,
+              interestRate: userData.interestRate,
               monthlyNetIncome: userData.monthlyNetIncome,
+              otherLoans: userData.otherLoans,
               age: userData.age,
+              dependents: userData.dependents,
               employmentType: userData.employmentType,
+              isUnder36: userData.isUnder36,
               feasibility: feasibility,
             }}
             onBack={() => setView('simulator')}
