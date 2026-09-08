@@ -400,7 +400,7 @@ Riepilogo simulazione Bancometro.it:
               </div>
 
               <p className="text-center text-xs font-semibold text-slate-400 py-2">
-                Varsione 2.0.9 - App di proprietà di Mario SORICE (C)2026 - Tutti i diritti riservati.
+                Versione 2.0.9 - App di proprietà di Mario SORICE (C)2026 - Tutti i diritti riservati.
               </p>
 
             </section>

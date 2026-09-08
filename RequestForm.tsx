@@ -121,7 +121,7 @@ Richiesta trasmessa il: ${new Date().toLocaleString('it-IT')}`;
 
     const emailPayload = {
       _subject: `Nuova Richiesta Mutuo & Simulazione: ${formData.nome} ${formData.cognome} - €${formData.importo.toLocaleString('it-IT')} | Bancometro.it`,
-      _cc: 'danielaruggiero@credipass.it',
+      _cc: 'daniela.ruggiero@credipass.it',
       _template: 'table',
       
       // 1. Dati Richiedente
@@ -197,7 +197,7 @@ Vorrei una valutazione approfondita per sbloccare la delibera. Grazie!`;
     window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
   };
 
-  const mailtoUrl = `mailto:mario.sorice@credipass.it?cc=danielaruggiero@credipass.it&subject=${encodeURIComponent(
+  const mailtoUrl = `mailto:mario.sorice@credipass.it?cc=daniela.ruggiero@credipass.it&subject=${encodeURIComponent(
     `Richiesta Mutuo & Simulazione: ${formData.nome} ${formData.cognome} - €${formData.importo.toLocaleString('it-IT')}`
   )}&body=${encodeURIComponent(formatSummaryText())}`;
 
@@ -656,7 +656,7 @@ Vorrei una valutazione approfondita per sbloccare la delibera. Grazie!`;
             <div className="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4 flex items-center gap-3">
               <Mail className="w-5 h-5 text-indigo-600 shrink-0" />
               <p className="text-xs font-semibold text-indigo-900 leading-relaxed">
-                Tutti i campi compilati e i parametri di simulazione (inclusi <strong>Costo Immobile</strong>, <strong>Importo Mutuo</strong>, <strong>Rata</strong>, <strong>Reddito</strong> e <strong>Uscite per altri prestiti</strong>) verranno inviati via email ai consulenti: <span className="font-bold underline">mario.sorice@credipass.it</span> e <span className="font-bold underline">danielaruggiero@credipass.it</span>.
+                Tutti i campi compilati e i parametri di simulazione (inclusi <strong>Costo Immobile</strong>, <strong>Importo Mutuo</strong>, <strong>Rata</strong>, <strong>Reddito</strong> e <strong>Uscite per altri prestiti</strong>) verranno inviati via email ai consulenti: <span className="font-bold underline">mario.sorice@credipass.it</span> e <span className="font-bold underline">daniela.ruggiero@credipass.it</span>.
               </p>
             </div>
 
@@ -718,7 +718,7 @@ Vorrei una valutazione approfondita per sbloccare la delibera. Grazie!`;
             {/* Mail confirmation alert */}
             <div className="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-100 text-indigo-800 px-5 py-2.5 rounded-full text-xs font-bold">
               <Mail className="w-4 h-4 text-indigo-600" />
-              Riepilogo completo della simulazione inoltrato via email a <span className="font-black text-indigo-900">mario.sorice@credipass.it</span> e <span className="font-black text-indigo-900">danielaruggiero@credipass.it</span>
+              Riepilogo completo della simulazione inoltrato via email a <span className="font-black text-indigo-900">mario.sorice@credipass.it</span> e <span className="font-black text-indigo-900">daniela.ruggiero@credipass.it</span>
             </div>
 
             {/* Comprehensive Summary Box: Contains all simulator data */}
