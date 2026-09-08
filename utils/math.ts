@@ -34,7 +34,7 @@ export const evaluateFeasibility = (data: UserData): FeasibilityResult => {
     messages.push(`LTV troppo alto: ${(ltv * 100).toFixed(1)}% (Max ${maxLtv * 100}% per il tuo profilo).`);
     score = 2;
   } else if (ltv > 0.8) {
-    messages.push(`LTV superiore all'80%: l'istruttoria potrebbe essere più rigorosa.`);
+    messages.push(`LTV superiore all'80%. l'istruttoria potrebbe essere più rigorosa. Possibile solo con CONSAP e ISEE inferiore ai 40k.`);
     score = Math.max(score, 1);
   }
 
